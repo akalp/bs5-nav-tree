@@ -4,8 +4,8 @@ function htmlToElement(html) {
   return template.firstChild;
 }
 
-const chevronIcon = `<span class="d-inline-block tree-icon"><i class="fa-solid fa-chevron-down"></i></span>`;
-const linkIcon = `<span class="d-inline-block tree-icon"><i class="fa-solid fa-link"></i></span>`;
+const chevronIcon = `<span class="d-inline-block tree-icon"><i class="fas fa-chevron-down"></i></span>`;
+const linkIcon = `<span class="d-inline-block tree-icon"><i class="fas fa-link"></i></span>`;
 
 
 const menu_html = `
