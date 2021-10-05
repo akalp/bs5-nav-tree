@@ -1,0 +1,7 @@
+#menu-tree a.tree-link:focus{
+  color: black;
+}
+
+#menu-tree span.tree-icon {
+  width: 25px;
+}
