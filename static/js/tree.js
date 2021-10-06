@@ -8,69 +8,6 @@ const chevronIcon = `<span class="d-inline-block tree-icon"><i class="fas fa-che
 const linkIcon = `<span class="d-inline-block tree-icon"><i class="fas fa-link"></i></span>`;
 
 
-const menu_html = `
-<ul id="menu-tree">
-
-<li id="li3">
-<a id="a3" href="#">
-  Link 7 _ new
-</a>
-</li>
-      <li id="li1">
-        <a id="a1" href="#">
-          Link 1
-        </a>
-      </li>
-      <li id="li2">
-        <a id="a2">
-          Collapse 1
-        </a>
-        <ul id="ul1">
-          <li id="li4">
-            <a id="a4">
-              Collapse 2
-            </a>
-            <ul id="ul2">
-              <li id="li6">
-                <a id="a6" href="#">
-                  Link 2
-                </a>
-              </li>
-              <li id="li7">
-                <a id="a7" href="#">
-                  Link 3
-                </a>
-              </li>
-              <li id="li8">
-                <a id="a8">
-                  Collapse 3
-                </a>
-                <ul id="ul3">
-                  <li id="li9">
-                    <a id="a9" href="#">
-                      Link 4
-                    </a>
-                  </li>
-                  <li id="li10">
-                    <a id="a10" href="#">
-                      Link 5
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li id="li5">
-            <a id="a5" href="#">
-              Link 6
-            </a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-
-`
-
 function copyAttrs(src, target) {
   for (let attr of src.attributes) {
     target.setAttribute(attr.name, attr.value);
@@ -92,7 +29,8 @@ function update_tree(menu, menu_html) {
   old_node_ids.forEach((id) => {
     var new_node = new_menu.querySelector("#" + id);
     var old_node = old_menu.querySelector("#" + id);
-    copyAttrs(old_node, new_node);
+    if (new_node && old_node)
+      copyAttrs(old_node, new_node);
   });
 
   handle_tree(menu);
