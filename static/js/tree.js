@@ -6,7 +6,7 @@ function htmlToElement(html) {
 
 const chevronIcon = `<span class="d-inline-block tree-icon"><i class="fas fa-chevron-down"></i></span>`;
 const linkIcon = `<span class="d-inline-block tree-icon"><i class="fas fa-link"></i></span>`;
-
+const searchInput = `<input type="text" name="menu-tree-search" id="menu-tree-search" class="form-control">`;
 
 function copyAttrs(src, target) {
   for (let attr of src.attributes) {
@@ -117,6 +117,31 @@ function handle_tree(menu) {
   }
 }
 
+function init_search() {
+  document.querySelector("#menu-tree-search").addEventListener('keyup', (e) => {
+    const nodes = Array.from(document.querySelectorAll(".tree-link, .tree-group-link"));
+    nodes.forEach((i) => i.parentElement.classList.remove("d-none"));
+    nodes.filter((i) => !i.text.toLowerCase().includes(e.target.value)).forEach((i) => i.parentElement.classList.add("d-none"));
+
+    document.querySelectorAll(".tree-group-link").forEach((i) => {
+      if (Array.from(i.parentElement.querySelector("div ul").querySelectorAll("li")).filter((j) => !j.classList.contains("d-none")).length > 0)
+        i.parentElement.classList.remove("d-none"); // if link of ul does not contain text but ul has any element that contains text, then show the link of ul
+      else
+        i.parentElement.classList.add("d-none"); // if link of ul contains text but ul does not have any element that contains text, then hide the link of ul
+    });
+
+  });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
-  init_tree(document.querySelector('#menu-tree'));
+  let menu = document.querySelector('#menu-tree');
+
+  init_tree(menu);
+
+  if (menu.getAttribute("searchable") !== null) {
+    menu.parentElement.prepend(htmlToElement(searchInput));
+
+    init_search();
+  }
+
 });
