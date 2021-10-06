@@ -6,7 +6,7 @@ function htmlToElement(html) {
 
 const chevronIcon = `<span class="d-inline-block tree-icon"><i class="fas fa-chevron-down"></i></span>`;
 const linkIcon = `<span class="d-inline-block tree-icon"><i class="fas fa-link"></i></span>`;
-const searchInput = `<input type="text" name="menu-tree-search" id="menu-tree-search" class="form-control">`;
+const searchInput = `<input type="text" name="menu-tree-search" id="menu-tree-search" class="form-control" placeholder="Search">`;
 
 function copyAttrs(src, target) {
   for (let attr of src.attributes) {
