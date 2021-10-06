@@ -117,17 +117,19 @@ function handle_tree(menu) {
   }
 }
 
-function init_search() {
+function init_search(show_empty) {
   document.querySelector("#menu-tree-search").addEventListener('keyup', (e) => {
     const nodes = Array.from(document.querySelectorAll(".tree-link, .tree-group-link"));
     nodes.forEach((i) => i.parentElement.classList.remove("d-none"));
     nodes.filter((i) => !i.text.toLowerCase().includes(e.target.value)).forEach((i) => i.parentElement.classList.add("d-none"));
 
     document.querySelectorAll(".tree-group-link").forEach((i) => {
-      if (Array.from(i.parentElement.querySelector("div ul").querySelectorAll("li")).filter((j) => !j.classList.contains("d-none")).length > 0)
+      if (Array.from(i.parentElement.querySelector("div ul").querySelectorAll("li")).filter((j) => !j.classList.contains("d-none")).length > 0) {
         i.parentElement.classList.remove("d-none"); // if link of ul does not contain text but ul has any element that contains text, then show the link of ul
-      else
-        i.parentElement.classList.add("d-none"); // if link of ul contains text but ul does not have any element that contains text, then hide the link of ul
+      } else {
+        if (!show_empty)
+          i.parentElement.classList.add("d-none"); // if link of ul contains text but ul does not have any element that contains text, then hide the link of ul
+      }
     });
 
   });
@@ -141,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (menu.getAttribute("searchable") !== null) {
     menu.parentElement.prepend(htmlToElement(searchInput));
 
-    init_search();
+    init_search(menu.getAttribute("show-empty") !== null);
   }
 
 });
