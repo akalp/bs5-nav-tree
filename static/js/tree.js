@@ -1,149 +1,137 @@
-function htmlToElement(html) {
-  var template = document.createElement('div');
-  template.innerHTML = html.trim();
-  return template.firstChild;
-}
-
-const chevronIcon = `<span class="d-inline-block tree-icon"><i class="fas fa-chevron-down"></i></span>`;
-const linkIcon = `<span class="d-inline-block tree-icon"><i class="fas fa-link"></i></span>`;
-const searchInput = `<input type="text" name="menu-tree-search" id="menu-tree-search" class="form-control" placeholder="Search">`;
-
 function copyAttrs(src, target) {
   for (let attr of src.attributes) {
-    target.setAttribute(attr.name, attr.value);
+    if (attr.name == "class")
+      attr.value.split(" ").forEach((cls) => target.classList.add(cls))
+    else
+      target.setAttribute(attr.name, attr.value);
   }
 }
 
 
-function update_tree(menu, menu_html) {
-  let old_menu = menu.cloneNode(true);
+var NavTree = function (props) {
+  this.props = props;
+  this.element = document.querySelector(this.props.obj_id);
+  this.searchable = this.element.dataset.hasOwnProperty('searchable');
+  this.showEmptyGroups = this.element.dataset.hasOwnProperty('showEmptyGroups');
+  this.chevronIcon = `<i class="fas fa-chevron-right"></i>`;
+  this.linkIcon = `<i class="fas fa-link"></i>`;
+  this.searchInput = `<input type="text" name="menu-tree-search" id="menu-tree-search" class="form-control" placeholder="Search">`;
 
-  let new_menu = htmlToElement(menu_html);
-  menu.innerHTML = new_menu.innerHTML;
-  init_tree(menu);
-
-  new_menu = menu;
-
-  const old_node_ids = Array.from(old_menu.querySelectorAll("[id]")).map((i) => i.getAttribute("id"));
-
-  old_node_ids.forEach((id) => {
-    var new_node = new_menu.querySelector("#" + id);
-    var old_node = old_menu.querySelector("#" + id);
-    if (new_node && old_node)
-      copyAttrs(old_node, new_node);
-  });
-
-  handle_tree(menu);
-}
-
-
-function init_tree(menu) {
-  menu.classList.add("nav", "flex-column");
-  menu.querySelectorAll("ul").forEach((ul) => ul.classList.add("nav", "flex-column"));
-  menu.querySelectorAll("li").forEach((li) => {
-    li.classList.add("nav-item");
-    const a = li.querySelector("a");
-    if (li.querySelector("ul")) {
-
-      a.classList.add("nav-link", "tree-group-link");
-      a.prepend(htmlToElement(chevronIcon));
-      a.setAttribute("data-bs-toggle", "collapse");
-      a.setAttribute("role", "button");
-      a.setAttribute("aria-expanded", "false");
-
-
-      const ul = li.querySelector("ul");
-
-      a.setAttribute("href", "#menuTreeCollapse_" + ul.getAttribute("id"));
-      a.setAttribute("aria-controls", "menuTreeCollapse_" + ul.getAttribute("id"));
-
-      var collapsable = document.createElement('div');
-      collapsable.classList.add("collapse", "ms-4");
-      collapsable.setAttribute("id", "menuTreeCollapse_" + ul.getAttribute("id"));
-      li.replaceChild(collapsable, ul);
-      collapsable.appendChild(ul);
-
-    } else {
-
-      a.classList.add("nav-link", "tree-link", "btn-outline-light");
-      a.prepend(htmlToElement(linkIcon));
-
+  this.init = function () {
+    if (!this.parent) {
+      var parent = document.createElement('div');
+      parent.setAttribute('id', 'nav-tree-wrapper');
+      this.element.parentElement.replaceChild(parent, this.element);
+      parent.appendChild(this.element);
+      this.parent = parent;
     }
-  });
 
-  handle_tree(menu);
-}
+    this.element.classList.add("nav", "flex-column");
 
-function handle_tree(menu) {
-  menu.querySelectorAll('a.tree-link').forEach((item) => {
-    item.addEventListener('click', () => {
-      menu.querySelectorAll('a.tree-link').forEach((link) => {
-        link.classList.remove('active', 'btn-outline-light');
-      });
-      item.classList.add('active', 'btn-outline-light');
-    });
-  });
+    this.element.querySelectorAll("ul").forEach((ul) => ul.classList.add("nav", "flex-column")); // add bs5 classes to lists
 
-  menu.querySelectorAll('a.tree-group-link').forEach((group) => {
-    handleChevron(group);
-    handleCollapse(group);
+    this.element.querySelectorAll("li").forEach((li) => {
+      const li_id = li.getAttribute("id");
+      li.classList.add("nav-item"); // add bs5 class to list item
 
-    group.addEventListener('click', (e) => {
-      handleChevron(e.target);
-    });
-  });
+      const a = li.querySelector("a");
+      a.classList.add("nav-link");
+      a.setAttribute("id", "tree-link-" + li_id);
+      var icon_parent = document.createElement('span');
+      icon_parent.classList.add("d-inline-block", "tree-icon");
+      icon_parent.style.width = '25px';
+      a.prepend(icon_parent);
 
-  function handleChevron(target) {
-    const chevron = (target.tagName === "I") ? target : target.querySelector('i');
-    const parent = (target.tagName === "I") ? target.closest('a') : target
+      if (li.querySelector("ul")) { // check list item has a ul object
+        a.classList.add("tree-group-link");
+        a.setAttribute("data-bs-toggle", "collapse");
+        a.setAttribute("role", "button");
+        a.setAttribute("aria-expanded", "false");
+        a.setAttribute("href", "#nav-tree-list-wrapper-" + li_id);
+        a.setAttribute("aria-controls", "nav-tree-list-wrapper-" + li_id);
+        icon_parent.innerHTML = this.chevronIcon;
 
-    if (parent.getAttribute('aria-expanded') === "false") {
-      chevron.classList.remove("fa-chevron-down");
-      chevron.classList.add("fa-chevron-right");
-    } else {
-      chevron.classList.remove("fa-chevron-right");
-      chevron.classList.add("fa-chevron-down");
-    }
-  }
 
-  function handleCollapse(target) {
-    const group = (target.tagName === "A") ? target : target.parentElement;
+        const ul = li.querySelector("ul");
 
-    if (group.getAttribute('aria-expanded') === "true") {
-      group.parentElement.querySelector(group.getAttribute('href')).classList.add('show');
-    } else {
-      group.parentElement.querySelector(group.getAttribute('href')).classList.remove('show');
-    }
-  }
-}
+        var collapsable = document.createElement('div');
+        collapsable.classList.add("collapse", "ms-4");
+        collapsable.setAttribute("id", "nav-tree-list-wrapper-" + li_id);
+        li.replaceChild(collapsable, ul);
+        collapsable.appendChild(ul);
+        new bootstrap.Collapse(collapsable, { toggle: false });
 
-function init_search(show_empty) {
-  document.querySelector("#menu-tree-search").addEventListener('keyup', (e) => {
-    const nodes = Array.from(document.querySelectorAll(".tree-link, .tree-group-link"));
-    nodes.forEach((i) => i.parentElement.classList.remove("d-none"));
-    nodes.filter((i) => !i.text.toLowerCase().includes(e.target.value)).forEach((i) => i.parentElement.classList.add("d-none"));
+        collapsable.addEventListener('show.bs.collapse', (e) => {
+          e.target.parentElement.querySelector('.tree-icon i').classList.replace('fa-chevron-right', 'fa-chevron-down');
+        });
 
-    document.querySelectorAll(".tree-group-link").forEach((i) => {
-      if (Array.from(i.parentElement.querySelector("div ul").querySelectorAll("li")).filter((j) => !j.classList.contains("d-none")).length > 0) {
-        i.parentElement.classList.remove("d-none"); // if link of ul does not contain text but ul has any element that contains text, then show the link of ul
+        collapsable.addEventListener('hide.bs.collapse', (e) => {
+          e.target.parentElement.querySelector('.tree-icon i').classList.replace('fa-chevron-down', 'fa-chevron-right');
+          if (e.target.querySelector('.collapse'))
+            bootstrap.Collapse.getInstance(e.target.querySelector('.collapse')).hide();
+        });
+
       } else {
-        if (!show_empty)
-          i.parentElement.classList.add("d-none"); // if link of ul contains text but ul does not have any element that contains text, then hide the link of ul
+
+        a.classList.add("tree-link");
+
+        icon_parent.innerHTML = this.linkIcon;
+
+        a.addEventListener('click', () => {
+          this.parent.querySelectorAll('a.tree-link').forEach((link) => {
+            link.classList.remove('active');
+          });
+
+          a.classList.add('active');
+        });
+
       }
+      icon_parent.firstElementChild.setAttribute('id', 'tree-icon-' + li_id);
     });
 
-  });
-}
+    if (this.searchable) {
+      var search_parent = document.createElement('div');
+      search_parent.setAttribute('id', 'nav-tree-search-wrapper');
+      search_parent.classList.add('my-2');
+      this.parent.prepend(search_parent);
+      search_parent.innerHTML = this.searchInput;
 
-document.addEventListener("DOMContentLoaded", function () {
-  let menu = document.querySelector('#menu-tree');
+      search_parent.firstChild.addEventListener('keyup', (e) => {
+        const nodes = Array.from(document.querySelectorAll("li"));
+        nodes.forEach((i) => i.classList.remove("d-none"));
 
-  init_tree(menu);
+        if (e.target.value !== '') {
+          nodes.filter((i) => !i.querySelector('a').text.toLowerCase().includes(e.target.value)).forEach((i) => i.classList.add("d-none"));
+          nodes.filter((node) => node.querySelector('a').classList.contains('tree-group-link')).forEach((node) => {
+            if (Array.from(node.querySelectorAll("li")).filter((li) => !li.classList.contains('d-none')).length > 0) {
+              const c = node.querySelector('.collapse');
+              c.classList.add('no-transition');
+              bootstrap.Collapse.getInstance(c).show();
+              node.classList.remove('d-none');
+              c.classList.remove('no-transition');
+            } else if (!this.showEmptyGroups) {
+              node.classList.add('d-none');
+            }
+          });
+        }
 
-  if (menu.getAttribute("searchable") !== null) {
-    menu.parentElement.prepend(htmlToElement(searchInput));
+      });
 
-    init_search(menu.getAttribute("show-empty") !== null);
+    }
   }
 
-});
+  this.update = function (menu_html) {
+    const old = this.element.cloneNode(true);
+    this.parent.innerHTML = menu_html;
+    this.element = this.parent.querySelector('ul');
+    this.init();
+    Array.from(old.querySelectorAll("[id]")).map((i) => i.getAttribute("id")).forEach((id) => {
+      var new_node = this.element.querySelector("#" + id);
+      var old_node = old.querySelector("#" + id);
+      if (new_node && old_node)
+        copyAttrs(old_node, new_node);
+    });
+  }
+
+  this.init();
+}

@@ -1,7 +1,13 @@
-#menu-tree a.tree-link:focus{
+.tree-link:focus,
+.tree-link.active {
   color: black;
+  background-color: rgb(235, 235, 235);
 }
 
-#menu-tree span.tree-icon {
-  width: 25px;
+.tree-link:hover {
+  background-color: rgb(245, 245, 245);
+}
+
+.no-transition{
+  transition: none !important;
 }
