@@ -4,7 +4,8 @@
   background-color: rgb(235, 235, 235);
 }
 
-.tree-link:hover {
+.tree-link:hover,
+.tree-group-link:hover {
   background-color: rgb(245, 245, 245);
 }
 
