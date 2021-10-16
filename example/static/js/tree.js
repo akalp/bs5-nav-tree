@@ -1,8 +1,7 @@
-var NavTree = function (options) {
-  var element = document.querySelector(options.selector);
+var NavTree = function (selector, options) {
+  var element = document.querySelector(selector);
 
   var props = {
-    element: document.querySelector(options.selector),
     searchable: options.searchable || false,
     showEmptyGroups: options.showEmptyGroups || false,
     groupOpenIconClass: (options.groupOpenIconClass && options.groupOpenIcon) ? options.groupOpenIconClass : "fas",
