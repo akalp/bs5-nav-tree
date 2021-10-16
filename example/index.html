@@ -7,13 +7,13 @@
 
   <link rel="stylesheet" href="static/vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="static/vendor/fontawesome/all.min.css" />
-  <link rel="stylesheet" href="static/css/tree.min.css">
+  <link rel="stylesheet" href="static/css/tree.css">
   <title>BS5 Tree</title>
 </head>
 
 <body>
   <div class="col-4 mx-auto">
-    <ul id="nav-tree" data-searchable data-show-empty-groups>
+    <ul id="nav-tree">
       <li id="li1">
         <a href="#">
           Link 1
@@ -73,7 +73,28 @@
     </ul>
   </div>
   <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="static/js/tree.min.js"></script>
+  <script src="static/js/tree.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      window.nav = new NavTree({
+        selector: "#nav-tree",
+        searchable: true,
+        showEmptyGroups: true,
+
+        groupOpenIconClass: "fas",
+        groupOpenIcon: "fa-chevron-down",
+
+        groupCloseIconClass: "fas",
+        groupCloseIcon: "fa-chevron-right",
+
+        linkIconClass: "fas",
+        linkIcon: "fa-link",
+
+        searchPlaceholderText: "Search",
+      });
+    });
+  </script>
+
 </body>
 
 </html>
