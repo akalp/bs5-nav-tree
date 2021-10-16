@@ -44,18 +44,18 @@ var NavTree = function (options) {
 
     element.classList.add("nav", "flex-column");
 
-    element.querySelectorAll("ul").forEach((ul) => ul.classList.add("nav", "flex-column")); // add bs5 classes to lists
+    element.querySelectorAll("ul:not(.extra)").forEach((ul) => ul.classList.add("nav", "flex-column")); // add bs5 classes to lists
 
-    element.querySelectorAll("li").forEach((li) => {
+    element.querySelectorAll("li:not(.extra)").forEach((li) => {
       const li_id = li.getAttribute("id");
       li.classList.add("nav-item"); // add bs5 class to list item
 
-      const a = li.querySelector("a");
+      const a = li.querySelector("a:not(.extra)");
       a.classList.add("nav-link");
       a.setAttribute("id", "tree-link-" + li_id);
 
 
-      if (li.querySelector("ul")) { // check list item has a ul object
+      if (li.querySelector("ul:not(.extra)")) { // check list item has a ul object
         a.classList.add("d-inline-block", "tree-group-link");
         a.setAttribute("data-bs-toggle", "collapse");
         a.setAttribute("role", "button");
@@ -65,7 +65,7 @@ var NavTree = function (options) {
         a.prepend(getIconWithWrapper(props.groupCloseIconClass, props.groupCloseIcon));
 
 
-        const ul = li.querySelector("ul");
+        const ul = li.querySelector("ul:not(.extra)");
 
         var collapsable = document.createElement('div');
         collapsable.classList.add("collapse", "ms-4");
@@ -115,13 +115,13 @@ var NavTree = function (options) {
       search_parent.innerHTML = `<input type="text" name="menu-tree-search" id="menu-tree-search" class="form-control" placeholder="${props.searchPlaceholderText}">`;
 
       search_parent.firstChild.addEventListener('keyup', (e) => {
-        const nodes = Array.from(document.querySelectorAll("li"));
+        const nodes = Array.from(document.querySelectorAll("li:not(.extra)"));
         nodes.forEach((i) => i.classList.remove("d-none"));
 
         if (e.target.value !== '') {
           nodes.filter((i) => !i.querySelector('a').text.toLowerCase().includes(e.target.value)).forEach((i) => i.classList.add("d-none"));
           nodes.filter((node) => node.querySelector('a').classList.contains('tree-group-link')).forEach((node) => {
-            if (Array.from(node.querySelectorAll("li")).filter((li) => !li.classList.contains('d-none')).length > 0) {
+            if (Array.from(node.querySelectorAll("li:not(.extra)")).filter((li) => !li.classList.contains('d-none')).length > 0) {
               const c = node.querySelector('.collapse');
               c.classList.add('no-transition');
               bootstrap.Collapse.getInstance(c).show();
