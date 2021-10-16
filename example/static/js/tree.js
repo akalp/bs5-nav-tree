@@ -16,7 +16,7 @@ var NavTree = function (options) {
 
   var getIconWithWrapper = (iconClass, icon) => {
     var wrapper = document.createElement('span');
-    wrapper.classList.add("d-inline-block", "tree-icon");
+    wrapper.classList.add("d-inline-block", "text-center", "tree-icon");
     wrapper.style.width = '25px';
     wrapper.innerHTML = `<i class="${iconClass} ${icon}"></i>`;
     return wrapper;
@@ -56,7 +56,7 @@ var NavTree = function (options) {
 
 
       if (li.querySelector("ul")) { // check list item has a ul object
-        a.classList.add("tree-group-link");
+        a.classList.add("d-inline-block", "tree-group-link");
         a.setAttribute("data-bs-toggle", "collapse");
         a.setAttribute("role", "button");
         a.setAttribute("aria-expanded", "false");
@@ -89,7 +89,7 @@ var NavTree = function (options) {
 
       } else {
 
-        a.classList.add("tree-link");
+        a.classList.add("d-inline-block", "tree-link");
 
         a.prepend(getIconWithWrapper(props.linkIconClass, props.linkIcon));
 
