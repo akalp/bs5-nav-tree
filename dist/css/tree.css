@@ -1,11 +1,12 @@
 .tree-link:focus,
 .tree-link.active {
   color: black;
-  background-color: rgb(235, 235, 235);
+  background-color: #f9fafb;
 }
 
-.tree-link:hover {
-  background-color: rgb(245, 245, 245);
+.tree-link:hover,
+.tree-group-link:hover {
+  background-color: #f8f9fa;
 }
 
 .no-transition{
