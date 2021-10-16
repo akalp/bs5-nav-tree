@@ -11,13 +11,14 @@ var NavTree = function (options) {
     groupCloseIcon: (options.groupCloseIconClass && options.groupCloseIcon) ? options.groupCloseIcon : "fa-chevron-right",
     linkIconClass: (options.linkIconClass && options.linkIcon) ? options.linkIconClass : "fas",
     linkIcon: (options.linkIconClass && options.linkIcon) ? options.linkIcon : "fa-link",
-    searchPlaceholderText: options.searchPlaceholderText || ""
+    searchPlaceholderText: options.searchPlaceholderText || "",
+    iconWidth: options.iconWidth || ""
   }
 
   var getIconWithWrapper = (iconClass, icon) => {
     var wrapper = document.createElement('span');
     wrapper.classList.add("d-inline-block", "text-center", "tree-icon");
-    wrapper.style.width = '25px';
+    wrapper.style.width = props.iconWidth;
     wrapper.innerHTML = `<i class="${iconClass} ${icon}"></i>`;
     return wrapper;
   }
