@@ -30,9 +30,8 @@
     ```
 2. Add this to your js file:
    ```js
-   const nav = new NavTree(
+   const nav = new NavTree("#nav-tree",
      {
-        selector: "#nav-tree",
         searchable: false, // default
         showEmptyGroups: false, // default
 
