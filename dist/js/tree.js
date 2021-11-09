@@ -115,11 +115,13 @@ var NavTree = function (selector, options) {
       search_parent.innerHTML = `<input type="text" name="menu-tree-search" id="menu-tree-search" class="form-control" placeholder="${props.searchPlaceholderText}">`;
 
       search_parent.firstChild.addEventListener('keyup', (e) => {
-        const nodes = Array.from(document.querySelectorAll("li:not(.extra)"));
+        const nodes = Array.from(element.querySelectorAll("li:not(.extra)"));
+        const extras = Array.from(element.querySelectorAll(".extra"));
         nodes.forEach((i) => i.classList.remove("d-none"));
 
         if (e.target.value !== '') {
-          nodes.filter((i) => !i.querySelector('a').text.toLowerCase().includes(e.target.value)).forEach((i) => i.classList.add("d-none"));
+          extras.forEach((i) => i.classList.add('d-none'));
+          nodes.filter((i) => !i.querySelector('a').text.toLowerCase().includes(e.target.value.toLowerCase())).forEach((i) => i.classList.add("d-none"));
           nodes.filter((node) => node.querySelector('a').classList.contains('tree-group-link')).forEach((node) => {
             if (Array.from(node.querySelectorAll("li:not(.extra)")).filter((li) => !li.classList.contains('d-none')).length > 0) {
               const c = node.querySelector('.collapse');
@@ -131,6 +133,8 @@ var NavTree = function (selector, options) {
               node.classList.add('d-none');
             }
           });
+        } else {
+          extras.forEach((i) => i.classList.remove('d-none'));
         }
       });
     }
@@ -148,8 +152,6 @@ var NavTree = function (selector, options) {
         copyAttrs(old_node, new_node);
     });
   }
-
-
 
   init();
 }
