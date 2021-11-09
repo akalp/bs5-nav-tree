@@ -5,9 +5,13 @@
    For example:
     ```html
     <ul id="nav-tree">
+      <li id="li0" class="extra nav-item"><a class="nav-link">extra</a></li>
       <li id="li8">
         <a>
           Collapse 3
+        </a>
+        <a class="extra">
+          extra link
         </a>
         <ul>
           <li id="li9">
