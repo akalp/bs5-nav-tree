@@ -144,7 +144,7 @@ var NavTree = function (selector, options) {
     const old = element.cloneNode(true);
     props.parent.innerHTML = menu_html;
     element = props.parent.querySelector('ul');
-    this.init();
+    init();
     Array.from(old.querySelectorAll("[id]")).map((i) => i.getAttribute("id")).forEach((id) => {
       var new_node = element.querySelector("#" + id);
       var old_node = old.querySelector("#" + id);
