@@ -1,140 +1,139 @@
-### How to use bs5-nav-tree v0.2.1
-#### Initializing the tree
-1. Make sure you have a list object with id "nav-tree" like ``<ul id="nav-tree"></ul>`` and, all list items must have its own id like ``<li id="li1"></li>``. If you have speacial list item or link add 'extra' class to exulude it. 
-   
-   For example:
-    ```html
-    <ul id="nav-tree">
-      <li id="li0" class="extra nav-item"><a class="nav-link">extra</a></li>
-      <li id="li8">
+# BS5-Nav-Tree
+
+### NOTE: ALL OLD VERSIONS ARE DEPRECATED. PLEASE USE v0.3.
+### NOTE 2: THIS PROJECT IS OPEN FOR CONTRIBUTION. PLEASE FEEL FREE FOR PULL REQUEST.
+## How to use bs5-nav-tree v0.3
+1. Create an unordered list as example. Make sure all list items have its own id. If you want to create searchable nav-tree, you have to add data-value attribute to the list items.  
+```html
+<ul id="arbitrary_id" class="arbitrary_class">
+  <li id="li0" data-value="li0">
+    <a href="#">extra list</a>
+  </li>
+  <li id="li1" data-value="li1">
+    <a href="#">
+      Link 1
+    </a>
+  </li>
+  <li id="li2" data-value="li2">
+    <span><i class="fas fa-chevron-left"></i></span>
+    <a>
+      Collapse 1
+    </a>
+    <span>t</span>
+    <ul>
+      <li id="li4" data-value="li4">
         <a>
-          Collapse 3
-        </a>
-        <a class="extra">
-          extra link
+          Collapse 2
         </a>
         <ul>
-          <li id="li9">
+          <li id="li6" data-value="li6">
             <a href="#">
-              Link 4
+              Link 2
             </a>
           </li>
-          <li id="li10">
+          <li id="li7" data-value="li7">
             <a href="#">
-              Link 5
+              Link 3
             </a>
+          </li>
+          <li id="li8" data-value="li8">
+            <a>
+              Collapse 3
+            </a>
+            <ul>
+              <li id="li9" data-value="li9">
+                <a href="#">
+                  Link 4
+                </a>
+              </li>
+              <li id="li10" data-value="li10">
+                <a href="#">
+                  Link 5
+                </a>
+              </li>
+            </ul>
           </li>
         </ul>
       </li>
-    </ul>
-    ```
-2. Add this to your js file:
-   ```js
-   const nav = new NavTree("#nav-tree",
-     {
-        searchable: false, // default
-        showEmptyGroups: false, // default
-
-        groupOpenIconClass: "fas", // default
-        groupOpenIcon: "fa-chevron-down", // default
-
-        groupCloseIconClass: "fas", // default
-        groupCloseIcon: "fa-chevron-right", // default
-
-        linkIconClass: "fas", // default
-        linkIcon: "fa-link", // default
-
-        iconWidth: "",  // default
-
-        searchPlaceholderText: "Search", // default
-      }
-   );
-   ```
-
-#### Updating the tree
-```js
-nav.update(menu_html);
-```
-
-
-### How to use bs5-nav-tree v0.2
-#### Initializing the tree
-1. Make sure you have a list object with id "nav-tree" like ``<ul id="nav-tree"></ul>`` and, all list items must have its own id like ``<li id="li1"></li>``.  If you want to search on tree add "data-searchable" attribute to the list, and if you want to show empty groups after search add "data-show-empty-groups" attribute to the list.
-   
-   For example:
-    ```html
-    <ul id="nav-tree" data-searchable data-show-empty-groups>
-      <li id="li8">
-        <a>
-          Collapse 3
+      <li id="li5" data-value="li5">
+        <a href="#">
+          Link 6
         </a>
-        <ul>
-          <li id="li9">
-            <a href="#">
-              Link 4
-            </a>
-          </li>
-          <li id="li10">
-            <a href="#">
-              Link 5
-            </a>
-          </li>
-        </ul>
       </li>
     </ul>
-    ```
-2. Add this to your js file:
-   ```js
-   const nav = new NavTree({ obj_id: "#nav-tree" });
-   ```
-
-#### Updating the tree
+  </li>
+</ul>
+```
+2. There are multiple ways to create NavTree.
 ```js
-nav.update(menu_html);
+NavTree.createBySelector("#nav-tree", {
+    searchable: true,
+    showEmptyGroups: true,
+
+    groupOpenIconClass: "fas",
+    groupOpenIcon: "fa-chevron-down",
+
+    groupCloseIconClass: "fas",
+    groupCloseIcon: "fa-chevron-right",
+
+    linkIconClass: "fas",
+    linkIcon: "fa-link",
+
+    searchPlaceholderText: "Search",
+  });
+```
+```js
+new NavTree(document.querySelector('#arbitrary_id'), {
+    searchable: true,
+    showEmptyGroups: true,
+
+    groupOpenIconClass: "fas",
+    groupOpenIcon: "fa-chevron-down",
+
+    groupCloseIconClass: "fas",
+    groupCloseIcon: "fa-chevron-right",
+
+    linkIconClass: "fas",
+    linkIcon: "fa-link",
+
+    searchPlaceholderText: "Search",
+  });
+```
+```js
+NavTree.getOrCreateInstance(document.querySelector('#arbitrary_id'), {
+    searchable: true,
+    showEmptyGroups: true,
+
+    groupOpenIconClass: "fas",
+    groupOpenIcon: "fa-chevron-down",
+
+    groupCloseIconClass: "fas",
+    groupCloseIcon: "fa-chevron-right",
+
+    linkIconClass: "fas",
+    linkIcon: "fa-link",
+
+    searchPlaceholderText: "Search",
+  });
+```
+You can access the NavTree instance by using the getOrCreateInstance function in the example above. If an instance has not been created before, it will give you a new instance.
+
+3. Using data-icon attribute, you can set special icon to the links.
+```html
+<li data-icon="fas fa-cloud" id="li0" data-value="li0">
+  <a href="#">extra list</a>
+</li>
 ```
 
-### How to use bs5-nav-tree v0.1
-__This is a very primitive version, so I do NOT recommend using it.__ But you want to use it:
-#### Initializing the tree 
-1. Make sure you have a list object with id "menu-tree". All elements of the list must have an id. If you want to search on tree add "searchable" attribute to the list, and if you want to show empty groups after search add "show-empty" attribute to the list. 
-   
-   For example:
-    ```html
-    <ul id="menu-tree" searchable show-empty>
-      <li id="li8">
-        <a id="a8">
-          Collapse 3
-        </a>
-        <ul id="ul3">
-          <li id="li9">
-            <a id="a9" href="#">
-              Link 4
-            </a>
-          </li>
-          <li id="li10">
-            <a id="a10" href="#">
-              Link 5
-            </a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-    ```
-
-1. Add this to your js file:
-    ```js
-    let menu = document.querySelector('#menu-tree');
-
-    init_tree(menu);
-
-    if (menu.getAttribute("searchable") !== null) {
-      menu.parentElement.prepend(htmlToElement(searchInput));
-
-      init_search(menu.getAttribute("show-empty") !== null);
-    }
-    ```
-#### Updating the tree
-```js
- update_tree(menu, menu_html)
+4. If you want to add some special things to the list, you can add them as prefix or suffix. Just wrap them with span and put them before or after than 'a' element.
+```html
+<li data-icon="fas fa-cloud" id="li0" data-value="li0">
+  <span><a href="#">1</a></span>
+  <span><i class="fas fa-plane"></i></span>
+  <a href="#">extra list</a>
+  <span><a href="#">1</a></span>
+  <span><i class="fas fa-plane text-danger"></i></span>
+</li>
 ```
 
+5. Done! You can experience it using the example in the example folder.

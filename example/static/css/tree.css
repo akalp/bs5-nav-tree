@@ -1,14 +1,13 @@
-.tree-link:focus,
-.tree-link.active {
-  color: black;
+.nt-li:focus,
+.nt-li.active {
   background-color: #f9fafb;
 }
 
-.tree-link:hover,
-.tree-group-link:hover {
-  background-color: #f8f9fa;
+.nt-li:focus *,
+.nt-li.active * {
+  color: black!important;
 }
 
-.no-transition{
-  transition: none !important;
+.nt-li>.d-flex:hover {
+  background-color: #f8f9fa;
 }

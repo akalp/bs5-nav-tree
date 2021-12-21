@@ -12,121 +12,130 @@
 </head>
 
 <body>
-  <div class="col-4 mx-auto">
-    <ul id="nav-tree">
-      <li id="li0" class="nav-item extra"><a class="nav-link" href="">extra list</a></li>
-      <li id="li1">
-        <a href="#">
-          Link 1
-        </a>
-        <a href="" class="extra">extra link</a>
-      </li>
-      <li id="li2">
-        <a>
-          Collapse 1
-        </a>
-        <ul>
-          <li id="li4">
-            <a>
-              Collapse 2
-            </a>
-            <ul>
-              <li id="li6">
-                <a href="#">
-                  Link 2
-                </a>
-              </li>
-              <li id="li7">
-                <a href="#">
-                  Link 3
-                </a>
-              </li>
-              <li id="li8">
-                <a>
-                  Collapse 3
-                </a>
-                <ul>
-                  <li id="li9">
-                    <a href="#">
-                      Link 4
-                    </a>
-                  </li>
-                  <li id="li10">
-                    <a href="#">
-                      Link 5
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li id="li5">
-            <a href="#">
-              Link 6
-            </a>
-          </li>
-        </ul>
-      </li>
+  <div class="row">
+    <div class="col-4 mx-auto">
+      <ul id="nav-tree">
+        <li data-icon="fas fa-cloud" id="li0" data-value="li0">
+          <span><a href="#">1</a></span>
+          <span><i class="fas fa-plane"></i></span>
+          <a href="#">extra list</a>
+          <span><a href="#">1</a></span>
+          <span><i class="fas fa-plane text-danger"></i></span>
+        </li>
+        <li id="li1" data-value="li1">
+          <a href="#">
+            Link 1
+          </a>
+        </li>
+        <li id="li2" data-value="li2">
+          <span><i class="fas fa-chevron-left"></i></span>
+          <a>
+            Collapse 1
+          </a>
+          <span>t</span>
+          <ul>
+            <li id="li4" data-value="li4">
+              <a>
+                Collapse 2
+              </a>
+              <ul>
+                <li id="li6" data-value="li6">
+                  <a href="#">
+                    Link 2
+                  </a>
+                </li>
+                <li id="li7" data-value="li7">
+                  <a href="#">
+                    Link 3
+                  </a>
+                </li>
+                <li id="li8" data-value="li8">
+                  <a>
+                    Collapse 3
+                  </a>
+                  <ul>
+                    <li id="li9" data-value="li9">
+                      <a href="#">
+                        Link 4
+                      </a>
+                    </li>
+                    <li id="li10" data-value="li10">
+                      <a href="#">
+                        Link 5
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li id="li5" data-value="li5">
+              <a href="#">
+                Link 6
+              </a>
+            </li>
+          </ul>
+        </li>
 
-      <li id="li20">
-        <a>
-          Collapse 10
-        </a>
-        <ul>
-          <li id="li40">
-            <a>
-              Collapse 20
-            </a>
-            <ul>
-              <li id="li60">
-                <a href="#">
-                  Link 20
-                </a>
-              </li>
-              <li id="li70">
-                <a href="#">
-                  Link 30
-                </a>
-              </li>
-              <li id="li80">
-                <a>
-                  Collapse 30
-                </a>
-                <ul>
-                  <li id="li90">
-                    <a href="#">
-                      Link 40
-                    </a>
-                  </li>
-                  <li id="li100">
-                    <a href="#">
-                      Link 50
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li id="li50">
-            <a href="#">
-              Link 60
-            </a>
-          </li>
-        </ul>
-      </li>
+        <li id="li20" data-value="li20">
+          <a>
+            Collapse 10
+          </a>
+          <ul>
+            <li id="li40" data-value="li40">
+              <a>
+                Collapse 20
+              </a>
+              <ul>
+                <li id="li60" data-value="li60">
+                  <a href="#">
+                    Link 20
+                  </a>
+                </li>
+                <li id="li70" data-value="li70">
+                  <a href="#">
+                    Link 30
+                  </a>
+                </li>
+                <li id="li80" data-value="li80">
+                  <a>
+                    Collapse 30
+                  </a>
+                  <ul>
+                    <li id="li90" data-value="li90">
+                      <a href="#">
+                        Link 40
+                      </a>
+                    </li>
+                    <li id="li100" data-value="li100">
+                      <a href="#">
+                        Link 50
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li id="li50" data-value="li50">
+              <a href="#">
+                Link 60
+              </a>
+            </li>
+          </ul>
+        </li>
 
-      <li id="li3">
-        <a href="#">
-          Link 7
-        </a>
-      </li>
-    </ul>
-  </div>
+        <li id="li3" data-value="li3">
+          <a href="#">
+            Link 7
+          </a>
+        </li>
+      </ul>
+</div>
+</div>
   <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="static/js/tree.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      window.nav = new NavTree("#nav-tree", {
+      NavTree.createBySelector("#nav-tree", {
         searchable: true,
         showEmptyGroups: true,
 
@@ -138,8 +147,6 @@
 
         linkIconClass: "fas",
         linkIcon: "fa-link",
-
-        iconWidth: "25px",
 
         searchPlaceholderText: "Search",
       });
