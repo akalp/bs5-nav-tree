@@ -137,3 +137,8 @@ You can access the NavTree instance by using the getOrCreateInstance function in
 ```
 
 5. Done! You can experience it using the example in the example folder.
+
+#### Update the tree
+```js
+navtree_instance.update(html_string)
+```
