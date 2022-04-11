@@ -2,6 +2,7 @@
 
 ## v0.3.1 Changelog
 1. Added iconPlace value to config to determine location of group/link icons. It can be 'start' or 'end'.
+2. Link and group icons have ahref attribute.
 
 ### NOTE: ALL OLD VERSIONS ARE DEPRECATED. PLEASE USE v0.3.
 ### NOTE 2: THIS PROJECT IS OPEN FOR CONTRIBUTION. PLEASE FEEL FREE FOR PULL REQUEST.
