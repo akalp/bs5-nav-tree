@@ -96,14 +96,6 @@ class NavTree {
               })
           }
 
-          icon_link.appendChild(icon)
-          icon_container.appendChild(icon_link)
-          if(this.props.iconPlace == "start"){
-            prefix_container.appendChild(icon_container)
-          } else {
-            li_container.appendChild(icon_container)
-          }
-
           var prevs = []
           var prev = li_container
           while(prev = prev.previousSibling){
@@ -141,6 +133,14 @@ class NavTree {
           })
 
           li_container.append(suffix_container)
+
+          icon_link.appendChild(icon)
+          icon_container.appendChild(icon_link)
+          if(this.props.iconPlace == "start"){
+            prefix_container.appendChild(icon_container)
+          } else {
+            suffix_container.appendChild(icon_container)
+          }
       })
 
       if(this.props.searchable) {
