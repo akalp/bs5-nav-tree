@@ -1,5 +1,8 @@
 # BS5-Nav-Tree
 
+## v0.3.1 Changelog
+1. Added iconPlace value to config to determine location of group/link icons. It can be 'start' or 'end'.
+
 ### NOTE: ALL OLD VERSIONS ARE DEPRECATED. PLEASE USE v0.3.
 ### NOTE 2: THIS PROJECT IS OPEN FOR CONTRIBUTION. PLEASE FEEL FREE FOR PULL REQUEST.
 ## How to use bs5-nav-tree v0.3

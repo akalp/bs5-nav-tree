@@ -17,7 +17,8 @@ class NavTree {
       groupCloseIcon: (config.groupCloseIconClass && config.groupCloseIcon) ? config.groupCloseIcon : 'fa-chevron-right',
       linkIconClass: (config.linkIconClass && config.linkIcon) ? config.linkIconClass : 'fas',
       linkIcon: (config.linkIconClass && config.linkIcon) ? config.linkIcon : 'fa-link',
-      searchPlaceholderText: config.searchPlaceholderText || ''
+      searchPlaceholderText: config.searchPlaceholderText || '',
+      iconPlace: config.iconPlace || 'start'
     }
   }
 
@@ -97,7 +98,11 @@ class NavTree {
 
           icon_link.appendChild(icon)
           icon_container.appendChild(icon_link)
-          prefix_container.appendChild(icon_container)
+          if(this.props.iconPlace == "start"){
+            prefix_container.appendChild(icon_container)
+          } else {
+            li_container.appendChild(icon_container)
+          }
 
           var prevs = []
           var prev = li_container
